@@ -36,33 +36,16 @@ window.onkeyup = function (e){
 
 
 let materialArray = [];
-let texture_ft = new THREE.TextureLoader().load("material/Daylight Box_Front.bmp");
-let texture_bk = new THREE.TextureLoader().load("material/Daylight Box_Back.bmp");
-let texture_up = new THREE.TextureLoader().load("material/Daylight Box_Top.bmp");
-let texture_dn = new THREE.TextureLoader().load("material/Daylight Box_Bottom.bmp");
-let texture_rt = new THREE.TextureLoader().load("material/Daylight Box_Right.bmp");
-let texture_lf = new THREE.TextureLoader().load("material/Daylight Box_Left.bmp");
+const sides = ["ft", "bk", "up", "dn", "rt", "lf"];
 
-
-
-materialArray.push(new THREE.MeshBasicMaterial( { map: texture_ft,
-wireframe : false  }));
-materialArray.push(new THREE.MeshBasicMaterial( { map: texture_bk,
-wireframe : false  }));
-materialArray.push(new THREE.MeshBasicMaterial( { map: texture_up,
-wireframe : false  }));
-materialArray.push(new THREE.MeshBasicMaterial( { map: texture_dn,
-wireframe : false  }));
-materialArray.push(new THREE.MeshBasicMaterial( { map: texture_rt,
-wireframe : false  }));
-materialArray.push(new THREE.MeshBasicMaterial( { map: texture_lf,
-wireframe : false  }));
 
 
 
 //skybox
   for (let i = 0; i < 6; i++) {
-     materialArray[i].side = THREE.BackSide;
+    let texture =  new THREE.TextureLoader().load("material/skybox/skybox_"+sides[i]+".bmp");
+    materialArray.push(new THREE.MeshBasicMaterial( {map : texture, wireframe : false} ));
+    materialArray[i].side = THREE.BackSide;
   }
   var skyboxGeo = new THREE.BoxGeometry(400, 400, 400);
   var skybox = new THREE.Mesh(skyboxGeo, materialArray);

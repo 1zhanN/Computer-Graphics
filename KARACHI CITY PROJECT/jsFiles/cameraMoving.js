@@ -57,6 +57,5 @@ export class Movement {
         // }
        this.movingTimeout = setTimeout(this.cameraMove,1000/60,key);
     }
-      
 
 }
