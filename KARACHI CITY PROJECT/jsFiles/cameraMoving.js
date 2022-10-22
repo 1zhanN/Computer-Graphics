@@ -1,9 +1,11 @@
+//By Izhan 048, Modifed by Umar 104
 export class Movement {
-    constructor(window,camera) {
+    constructor(window,camera,fps) {
         this.keyList = ["a","d","w","s","q","e","ArrowRight","ArrowLeft","ArrowUp","ArrowDown"];
         this.camera = camera;
         this.window = window;
         this.movingTimeout = -1;
+        this.FPS = 120;
     }
 
     keyRelease = () => this.stopMoving();
@@ -26,36 +28,36 @@ export class Movement {
 
     cameraMove = (key) => {
         if (key == "a") {
-          this.camera.position.x -= 1
+          this.camera.translateX(-1);
         }
         else if (key == "d") {
-          this.camera.position.x += 1
+          this.camera.translateX(+1);
         }
         else if (key == "w") {
-          this.camera.position.z -= 1
+          this.camera.translateZ(-1);
         }
         else if (key == "s") {
-          this.camera.position.z += 1
+          this.camera.translateZ(+1);
         }
         else if (key == "q") {
-          this.camera.position.y += 1
+          this.camera.translateY(+1);
         }
         else if (key == "e") {
-          this.camera.position.y -= 1
+          this.camera.translateY(-1);
         }
         else if (key == "ArrowRight") {
-          this.camera.rotation.y -= 0.1
+          this.camera.rotateY(-0.1);
         }
         else if (key == "ArrowLeft") {
-          this.camera.rotation.y += 0.1
+          this.camera.rotateY(+0.1);
         }
-        // else if (key == "ArrowUp") {
-        //   this.camera.rotation.x += 0.1
-        // }
-        // else if (key == "ArrowDown") {
-        //   this.camera.rotation.x -= 0.1
-        // }
-       this.movingTimeout = setTimeout(this.cameraMove,1000/60,key);
+        else if (key == "ArrowUp") {
+          this.camera.rotateX(+0.1);
+        }
+        else if (key == "ArrowDown") {
+          this.camera.rotateX(-0.1);
+        }
+       this.movingTimeout = setTimeout(this.cameraMove,1000/this.FPS,key);
     }
 
 }
