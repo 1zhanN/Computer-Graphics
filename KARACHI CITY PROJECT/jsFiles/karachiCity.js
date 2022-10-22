@@ -67,7 +67,8 @@ const geometry = new THREE.BoxGeometry( 1, 1, 1 );
 const material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
 var cube = new THREE.Mesh( geometry, material );
 CVOBJ.scene.add( cube );
-
+cube.position.y = 50;
+cube.scale.set(4,4,4);
 var radian = (angle) => angle*180/Math.PI;
 //Rotation variable
 var i = 0.001
@@ -78,24 +79,23 @@ let x = 0
 let ran = 0
 let buildings = 8
 
-let texture = new THREE.TextureLoader().load("material\\buildingTex\\buildingtex1.bmp");
+//let texture = new THREE.TextureLoader().load("material\\buildingTex\\buildingtex1.bmp");
+let materialArray2 = simpleTexture("material/buildingTex/","buildingtex1");
 
 
 for(let i = 0; i < buildings; i++){
-const cubeGeometry = new THREE.BoxGeometry(4, 7+10*ran, 10+ 10*ran);
-const materialArray2 = new THREE.MeshBasicMaterial({
-  map: texture
-});
+  ran = Math.random();
+  const cubeGeometry = new THREE.BoxGeometry(4, 7+10*ran, 10+ 10*ran);
 
-const cube = new THREE.Mesh(cubeGeometry, materialArray2);
-plane.add(cube);
 
-cube.scale.set(2, 2 ,2)
-cube.position.set(x,0,(cube.scale.z*cube.geometry.parameters.depth/2)+0.1) // since plane itself is a 2D coordinate system, and cube is the child of plane, if we increase z it will effect cube's height (y axis acc to the eye)
-console.log()
-x+=12;
-ran = Math.random()
+  const cube = new THREE.Mesh(cubeGeometry, materialArray2);
+  
 
+  cube.scale.set(2, 2 ,2)
+  cube.position.set(x,0,(cube.scale.z*cube.geometry.parameters.depth/2)+0.1) // since plane itself is a 2D coordinate system, and cube is the child of plane, if we increase z it will effect cube's height (y axis acc to the eye)
+  x+=12;
+  
+  plane.add(cube);
 }
 
 
