@@ -4,11 +4,10 @@ export class Movement {
         this.keyList = ["a","d","w","s","q","e","ArrowRight","ArrowLeft","ArrowUp","ArrowDown"];
         this.camera = camera;
         this.window = window;
+        this.movingTimeout = -1;
         this.FPS = 120;
         this.myWorldYAxis = new THREE.Vector3(0, 1, 0);
         this.keySet = {};
-        this.movingSpeed = 0.5;
-        this.rotationAngle = THREE.MathUtils.degToRad(1);
     }
 //Object.keys(this.keySet)
     keyRelease = (e) => {
@@ -24,6 +23,7 @@ export class Movement {
           if (this.keySet[e.key] == undefined) {
             this.keySet[e.key] = -1;
             const keysPressed = Object.keys(this.keySet);
+            console.log(keysPressed);
             for (let index = 0; index < keysPressed.length; index++) {
               this.startMoving(keysPressed[index]);
             }
@@ -45,34 +45,34 @@ export class Movement {
 
     cameraMove = (key) => {
         if (key == "a") {
-          this.camera.translateX(-this.movingSpeed);
+          this.camera.translateX(-1);
         }
         else if (key == "d") {
-          this.camera.translateX(this.movingSpeed);
+          this.camera.translateX(+1);
         }
         else if (key == "w") {
-          this.camera.translateZ(-this.movingSpeed);
+          this.camera.translateZ(-1);
         }
         else if (key == "s") {
-          this.camera.translateZ(this.movingSpeed);
+          this.camera.translateZ(+1);
         }
         else if (key == "q") {
-          this.camera.translateY(this.movingSpeed);
+          this.camera.translateY(+1);
         }
         else if (key == "e") {
-          this.camera.translateY(-this.movingSpeed);
+          this.camera.translateY(-1);
         }
         else if (key == "ArrowRight") {
-          this.camera.rotateOnWorldAxis(this.myWorldYAxis,-this.rotationAngle);
+          this.camera.rotateOnWorldAxis(this.myWorldYAxis,-0.1);
         }
         else if (key == "ArrowLeft") {
-          this.camera.rotateOnWorldAxis(this.myWorldYAxis,this.rotationAngle);
+          this.camera.rotateOnWorldAxis(this.myWorldYAxis,0.1);
         }
         else if (key == "ArrowUp") {
-          this.camera.rotateX(this.rotationAngle );
+          this.camera.rotateX(+0.1);
         }
         else if (key == "ArrowDown") {
-          this.camera.rotateX(-this.rotationAngle );
+          this.camera.rotateX(-0.1);
         }
        this.keySet[key] = setTimeout(this.cameraMove,1000/this.FPS,key);
     }

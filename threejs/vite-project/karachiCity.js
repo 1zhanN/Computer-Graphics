@@ -1,3 +1,4 @@
+
 // npm run dev for local server
 // ctrl + C to close local server
 var scene, camera, renderer, orient, buildings;
@@ -5,9 +6,7 @@ var scene, camera, renderer, orient, buildings;
 function init() {
   scene = new THREE.Scene();
   camera = new THREE.PerspectiveCamera(40, window.innerWidth/window.innerHeight ,0.1 ,1000);
-
   camera.position.set(0,10,100);
-
   orient = new THREE.Vector3(0,0,0)
 
     
@@ -45,9 +44,8 @@ function init() {
 
 
 //skybox
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < 6; i++)
      materialArray[i].side = THREE.BackSide;
-  }
   var skyboxGeo = new THREE.BoxGeometry(400, 400, 400);
   var skybox = new THREE.Mesh(skyboxGeo, materialArray);
   scene.add(skybox);   
@@ -75,7 +73,7 @@ let x = 0
 let ran = 0
 buildings = 8
 let materialArray2 = [];
-let texture = new THREE.TextureLoader().load("material\\buildingTex\\buildingtex1.bmp");
+let texture = new THREE.TextureLoader().load("/vite-project/material/buildingTex/buildingtex3.bmp");
 
 
 for(let i = 0; i < buildings; i++){
@@ -98,67 +96,40 @@ ran = Math.random()
 
 // quaid ka mazar 
 // semi sphere
+window.onkeydown = function (e){ 
 
-//movement----------------------------------------------------------------------------
-var keyList = ["a","d","w","s","q","e","ArrowRight","ArrowLeft","ArrowUp","ArrowDown"];
-window.onkeyup = function (e){
-  stopMoving();
-}
-window.onkeydown = function (e) {   
-  if (keyList.includes(e.key)) {
-    console.log(e.key);
-    startMoving(e.key);
+  if (e.key == "a"){
+    camera.position.x -= 2
   }
-  
-}
-var movingTimeout = -1;
-function stopMoving() {
-  clearTimeout(movingTimeout);
-  movingTimeout = -1;
-}
+  else if (e.key == "d"){
+    camera.position.x += 2
+  }
+  else if (e.key == "w"){
+    camera.position.z -= 2
+  }
+  else if (e.key == "s"){
+    camera.position.z += 2
+  }
+  else if (e.key == "q"){
+    camera.position.y += 2
+  }
+  else if (e.key == "e"){
+    camera.position.y -= 2
+  }
 
-function startMoving(key) {
-  if (movingTimeout === -1) {      
-    cameraMove(key);
-  }
-}
-
-function cameraMove(key) {
-  if (key == "a") {
-    camera.position.x -= 1
-  }
-  else if (key == "d") {
-    camera.position.x += 1
-  }
-  else if (key == "w") {
-    camera.position.z -= 1
-  }
-  else if (key == "s") {
-    camera.position.z += 1
-  }
-  else if (key == "q") {
-    camera.position.y += 1
-  }
-  else if (key == "e") {
-    camera.position.y -= 1
-  }
-  else if (key == "ArrowRight") {
+  else if (e.key == "ArrowRight"){
     camera.rotation.y -= 0.1
   }
-  else if (key == "ArrowLeft") {
+  else if (e.key == "ArrowLeft"){
     camera.rotation.y += 0.1
   }
-  else if (key == "ArrowUp") {
+  else if (e.key == "ArrowUp"){
     camera.rotation.x += 0.1
   }
-  else if (key == "ArrowDown") {
+  else if (e.key == "ArrowDown"){
     camera.rotation.x -= 0.1
   }
-  movingTimeout = setTimeout(cameraMove,1000/60,key);
 }
-
-
-
 
 function animate() {
   renderer.render(scene,camera);
