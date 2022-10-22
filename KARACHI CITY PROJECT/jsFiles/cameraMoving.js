@@ -1,13 +1,12 @@
 //By Izhan 048, Modifed by Umar 104
 export class Movement {
-    constructor(window,camera,fps) {
+    constructor(window,camera) {
         this.keyList = ["a","d","w","s","q","e","ArrowRight","ArrowLeft","ArrowUp","ArrowDown"];
         this.camera = camera;
         this.window = window;
         this.movingTimeout = -1;
         this.FPS = 120;
         this.myWorldYAxis = new THREE.Vector3(0, 1, 0);
-        this.myWorldXAxis = new THREE.Vector3(1, 0, 0);
     }
 
     keyRelease = () => this.stopMoving();
