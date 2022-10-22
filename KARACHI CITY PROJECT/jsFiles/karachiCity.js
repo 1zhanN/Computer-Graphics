@@ -28,10 +28,10 @@ CVOBJ.scene.add( axesHelper );
 //Camera Position and Movement----------------------------------------------------- 
 CVOBJ.camera.position.set(0,10,100);
 var movement = new Movement(window,CVOBJ.camera);
-window.onkeyup = function (e){
-   movement.keyRelease();
+window.onkeyup = function (e) {
+   movement.keyRelease(e);
   }
-  window.onkeydown = function (e) {   
+  window.onkeydown = function (e) {
     movement.keyPress(e);
   }
 

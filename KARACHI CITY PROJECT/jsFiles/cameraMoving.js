@@ -7,22 +7,38 @@ export class Movement {
         this.movingTimeout = -1;
         this.FPS = 120;
         this.myWorldYAxis = new THREE.Vector3(0, 1, 0);
+        this.keySet = {};
     }
-
-    keyRelease = () => this.stopMoving();
+//Object.keys(this.keySet)
+    keyRelease = (e) => {
+      if (this.keyList.includes(e.key)) {
+        if (this.keySet[e.key] != undefined) {
+          this.stopMoving(this.keySet[e.key]);
+          delete this.keySet[e.key];
+        }
+      }
+    }
     keyPress = (e) => {
-        if (this.keyList.includes(e.key)) {
-            this.startMoving(e.key);
+      if (this.keyList.includes(e.key)) {
+          if (this.keySet[e.key] == undefined) {
+            this.keySet[e.key] = -1;
+            const keysPressed = Object.keys(this.keySet);
+            console.log(keysPressed);
+            for (let index = 0; index < keysPressed.length; index++) {
+              this.startMoving(keysPressed[index]);
+            }
           }
+        }
     }
 
-    stopMoving = () => {
-        clearTimeout(this.movingTimeout);
-        this.movingTimeout = -1;
+    stopMoving = (movingTimeout) => {
+        clearTimeout(movingTimeout);
+        movingTimeout = -1;
     }
 
     startMoving = (key) => {
-        if (this.movingTimeout === -1) {      
+      
+        if (this.keySet[key] === -1) {      
             this.cameraMove(key);
         }
     }
@@ -58,7 +74,7 @@ export class Movement {
         else if (key == "ArrowDown") {
           this.camera.rotateX(-0.1);
         }
-       this.movingTimeout = setTimeout(this.cameraMove,1000/this.FPS,key);
+       this.keySet[key] = setTimeout(this.cameraMove,1000/this.FPS,key);
     }
 
 }
