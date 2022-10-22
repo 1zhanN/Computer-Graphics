@@ -6,6 +6,8 @@ export class Movement {
         this.window = window;
         this.movingTimeout = -1;
         this.FPS = 120;
+        this.myWorldYAxis = new THREE.Vector3(0, 1, 0);
+        this.myWorldXAxis = new THREE.Vector3(1, 0, 0);
     }
 
     keyRelease = () => this.stopMoving();
@@ -46,10 +48,10 @@ export class Movement {
           this.camera.translateY(-1);
         }
         else if (key == "ArrowRight") {
-          this.camera.rotateY(-0.1);
+          this.camera.rotateOnWorldAxis(this.myWorldYAxis,-0.1);
         }
         else if (key == "ArrowLeft") {
-          this.camera.rotateY(+0.1);
+          this.camera.rotateOnWorldAxis(this.myWorldYAxis,0.1);
         }
         else if (key == "ArrowUp") {
           this.camera.rotateX(+0.1);

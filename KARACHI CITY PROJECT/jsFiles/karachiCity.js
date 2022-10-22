@@ -1,6 +1,6 @@
 import { canvasRender } from "./canvas.js";
 import {Movement} from "./cameraMoving.js";
-import {boxTexture} from './texture.js';
+import {boxTexture,simpleTexture} from './texture.js';
 
 const canvas = document.getElementById("myCanvas");
 // //Canvas
@@ -20,7 +20,13 @@ const CVOBJ = new canvasRender(canvas)
 
 CVOBJ.setRenderer();
 
+const camera = new THREE.PerspectiveCamera(40, CVOBJ.canvas.offsetWidth / CVOBJ.canvas.offsetHeight, 0.1 ,1000);
 
+CVOBJ.scene.add(camera);
+
+camera.position.set(0,10,100);
+const axesHelper = new THREE.AxesHelper( 5 );
+CVOBJ.scene.add( axesHelper );
 
 
 //Camera Position and Movement----------------------------------------------------- 
@@ -33,9 +39,10 @@ window.onkeyup = function (e){
     movement.keyPress(e);
   }
 
-// SKY BOX TEXTURE------------------------------------------------------------------
-let skyboxTextureMaterial = boxTexture("material/skybox/","skybox_");
 
+// TEXTURE------------------------------------------------------------------
+let skyboxTextureMaterial = boxTexture("material/skybox/","skybox_");
+let roadTexture = simpleTexture("material/road/","road1");
 
 
 var skyboxGeo = new THREE.BoxGeometry(400, 400, 400);
@@ -45,12 +52,13 @@ CVOBJ.scene.add(skybox);
 
 // plane 
 const planeGeometry = new THREE.PlaneGeometry(180, 180, 2, 2);
+
 const planeMaterial = new THREE.MeshBasicMaterial({
     color: 0x808080, 
     side: THREE.DoubleSide,
     wireframe: false
 } );
-const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+const plane = new THREE.Mesh(planeGeometry, roadTexture);
 CVOBJ.scene.add(plane);
 
 plane.rotation.set(4.66, 0, 0)

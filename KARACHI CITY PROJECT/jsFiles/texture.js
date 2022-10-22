@@ -9,3 +9,8 @@ export function boxTexture (location,name) {
   }
   return materialArray;
 }
+
+export function simpleTexture(location,name) {
+  let texture =  new THREE.TextureLoader().load(location+name+".bmp");
+  return new THREE.MeshBasicMaterial( {map : texture, wireframe : false} )
+}
