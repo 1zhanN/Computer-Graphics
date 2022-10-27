@@ -54,14 +54,14 @@ CVOBJ.scene.add(skybox);
 
 // Plane ---------------------------------------------------------------------
 let p_widht = 320;
-let p_height = 180;
+let p_length = 180;
 let xTiles = 8;
 let yTiles = 3;
 let p_topCornerVertex = {
                           x:-p_widht/2,
-                          y:p_height/2
+                          y:p_length/2
                       }; 
-const planeGeometry = new THREE.PlaneGeometry(p_widht, p_height, xTiles, yTiles);
+const planeGeometry = new THREE.PlaneGeometry(p_widht, p_length, xTiles, yTiles);
 
 const planeMaterial = new THREE.MeshBasicMaterial({
     color: 0x808080, 
@@ -79,62 +79,79 @@ let road_offsetX = 5
 let road_offsetY = 5
 
 //Building Position Generator
-function buildingPositionGenerator(planeW,planeH,topCorner,xOffset,yOffset,xTiles,yTiles) {
+function generateRandomSize(maxW,maxL,maxH) {
+  let W = Math.floor(Math.random() * maxW) + 1;
+  let L = Math.floor(Math.random() * maxL) + 1;
+  let H = Math.floor(Math.random() * maxH) + 1;
+  if (W<10) {
+    W = 10;
+  }
+  if (L<20) {
+    L = 20;
+  }
+  if (H<40) {
+    H = 40;
+  }
+  return [W,L,H]
+}
+function buildingPositionGenerator(scene,planeW,planeH,topCorner,xOffset,yOffset,xTiles,yTiles) {
 
   let leftBorder = {
                 x: topCorner.x + xOffset , 
                 y: topCorner.y - yOffset
             };
   
-  let singleTile = { W:planeW / xTiles, H: planeH / yTiles};
+  let singleTile = { W:planeW / xTiles, L: planeH / yTiles};
 
-  let buildingTile = { W:singleTile.W - 2*xOffset, H: singleTile.H - 2*yOffset };
+  let buildingTile = { W:singleTile.W - 2*xOffset, L: singleTile.L - 2*yOffset };
   
 
   let buildingDiv = 2;
-  let maxBuildingSize = { W: buildingTile.W / buildingDiv , H: buildingTile.H / buildingDiv };
+  let maxBuildingSize = { W: buildingTile.W / buildingDiv , L: buildingTile.L / buildingDiv };
   
   
-  let b_one = {x: leftBorder.x + maxBuildingSize.W / 2 , y: leftBorder.y - maxBuildingSize.H / 2 };
-  let b_two = {x: b_one.x ,y: b_one.y - maxBuildingSize.H};
-  console.log(b_one,b_two);
-
-
-
-
+  let b_one, b_two;
 
 
   //position generator of buildings
   let positionArray = []
   for (let row = 0; row < yTiles; row++) {
-    b_one = {x: leftBorder.x + maxBuildingSize.W / 2 , y: leftBorder.y - maxBuildingSize.H / 2 };
-    b_one.y -= row*(buildingTile.H + 2*xOffset);
-    b_two = {x: b_one.x ,y: b_one.y - maxBuildingSize.H};
+    b_one = {x: leftBorder.x + maxBuildingSize.W / 2 , y: leftBorder.y - maxBuildingSize.L / 2 };
+    b_one.y -= row*(buildingTile.L + 2*xOffset);
+    b_two = {x: b_one.x ,y: b_one.y - maxBuildingSize.L};
     for (let col = 0; col < xTiles*2; col++) {
       let pos1 = [b_one.x + col*maxBuildingSize.W, b_one.y];
       let pos2 = [b_two.x + col*maxBuildingSize.W, b_two.y];
       positionArray.push(pos1,pos2);
       if (col % 2 != 0) {
         b_one.x += 2*xOffset;
-        b_two = {x: b_one.x ,y: b_one.y - maxBuildingSize.H};
+        b_two = {x: b_one.x ,y: b_one.y - maxBuildingSize.L};
       }
       
     }
   }
- console.log(positionArray);
- return  positionArray;
-}
-const posArrB = buildingPositionGenerator(p_widht,p_height,p_topCornerVertex,road_offsetX,road_offsetY,xTiles,yTiles);
 
 
-var mat = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
-for (let index = 0; index < posArrB.length; index++) {
-  const coor = posArrB[index];
-  const geometry = new THREE.BoxGeometry( 15, 25, 10 );
-  var cube = new THREE.Mesh( geometry, mat);
-  cube.position.set(coor[0], coor[1], 10);
-  plane.add(cube);
+  let material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
+
+  for (let index = 0; index < positionArray.length; index++) {
+
+    const coor = positionArray[index];
+
+    let size = generateRandomSize(maxBuildingSize.W,maxBuildingSize.L,100);
+    const geometry = new THREE.BoxGeometry( size[0], size[1], size[2] );
+
+    var cube = new THREE.Mesh( geometry, material);
+
+    cube.position.set(coor[0], coor[1], 10);
+
+    plane.add(cube);
+  }
 }
+buildingPositionGenerator(plane,p_widht,p_length,p_topCornerVertex,road_offsetX,road_offsetY,xTiles,yTiles);
+
+
+
 
 
 //Creating Cube
