@@ -69,7 +69,7 @@ const planeMaterial = new THREE.MeshBasicMaterial({
     side: THREE.DoubleSide,
     wireframe: false
 } );
-const plane = new THREE.Mesh(planeGeometry, planeGeometry);
+const plane = new THREE.Mesh(planeGeometry, planeMaterial);
 CVOBJ.scene.add(plane);
 
 plane.rotation.set(toRadian(-90), 0, 0) //plane rotatin set
