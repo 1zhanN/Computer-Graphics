@@ -32,7 +32,8 @@ CVOBJ.scene.add( axesHelper );
 
 
 //Camera Position and Movement----------------------------------------------------- 
-CVOBJ.camera.position.set(0,10,100);
+CVOBJ.camera.position.set(0,100,300);
+CVOBJ.camera.rotateX(toRadian(-20));
 var movement = new Movement(window,CVOBJ.camera);
 window.onkeyup = function (e) {
    movement.keyRelease(e);
@@ -66,9 +67,9 @@ const planeGeometry = new THREE.PlaneGeometry(p_widht, p_length, xTiles, yTiles)
 const planeMaterial = new THREE.MeshBasicMaterial({
     color: 0x808080, 
     side: THREE.DoubleSide,
-    wireframe: true
+    wireframe: false
 } );
-const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+const plane = new THREE.Mesh(planeGeometry, planeGeometry);
 CVOBJ.scene.add(plane);
 
 plane.rotation.set(toRadian(-90), 0, 0) //plane rotatin set
@@ -78,7 +79,36 @@ plane.position.set(0, -5, 0)
 let road_offsetX = 5
 let road_offsetY = 5
 
-//Building Position Generator
+
+
+//random building generator in a 
+let b_width = +2
+let x = 0
+let ran = 0
+let buildings = 8
+
+let texture = new THREE.TextureLoader().load("material\\buildingTex\\buildingtex1.bmp");
+
+
+for(let i = 0; i < buildings; i++){
+const cubeGeometry = new THREE.BoxGeometry(4, 7+10*ran, 10+ 10*ran);
+var materialArray2 = new THREE.MeshBasicMaterial({
+  map: texture
+});
+
+const cube = new THREE.Mesh(cubeGeometry, materialArray2);
+plane.add(cube);
+
+cube.scale.set(2, 2 ,2)
+cube.position.set(x,0,(cube.scale.z*cube.geometry.parameters.depth/2)+0.1) // since plane itself is a 2D coordinate system, and cube is the child of plane, if we increase z it will effect cube's height (y axis acc to the eye)
+console.log()
+x+=12;
+ran = Math.random()
+
+}
+
+
+//Building Position Generator--------------------------------------------------
 function generateRandomSize(maxW,maxL,maxH) {
   let W = Math.floor(Math.random() * maxW) + 1;
   let L = Math.floor(Math.random() * maxL) + 1;
@@ -139,12 +169,12 @@ function buildingPositionGenerator(scene,planeW,planeH,topCorner,xOffset,yOffset
     const coor = positionArray[index];
 
     let size = generateRandomSize(maxBuildingSize.W,maxBuildingSize.L,100);
-    const geometry = new THREE.BoxGeometry( size[0], size[1], size[2] );
+    const geometry = new THREE.BoxGeometry( size[0]+0.5, size[1], size[2] );
 
-    var cube = new THREE.Mesh( geometry, material);
+    var cube = new THREE.Mesh( geometry, materialArray2);
 
-    cube.position.set(coor[0], coor[1], 10);
-
+    cube.position.set(coor[0], coor[1], (cube.position.z+cube.geometry.parameters.depth/2)+0.1);
+    
     plane.add(cube);
   }
 }
@@ -169,31 +199,10 @@ var radian = (angle) => angle*180/Math.PI;
 var i = 0.001
 
 
-//random building generator in a 
-let b_width = +2
-let x = 0
-let ran = 0
-let buildings = 8
-
-let texture = new THREE.TextureLoader().load("material\\buildingTex\\buildingtex1.bmp");
 
 
-for(let i = 0; i < buildings; i++){
-const cubeGeometry = new THREE.BoxGeometry(4, 7+10*ran, 10+ 10*ran);
-const materialArray2 = new THREE.MeshBasicMaterial({
-  map: texture
-});
 
-const cube = new THREE.Mesh(cubeGeometry, materialArray2);
-plane.add(cube);
 
-cube.scale.set(2, 2 ,2)
-cube.position.set(x,0,(cube.scale.z*cube.geometry.parameters.depth/2)+0.1) // since plane itself is a 2D coordinate system, and cube is the child of plane, if we increase z it will effect cube's height (y axis acc to the eye)
-console.log()
-x+=12;
-ran = Math.random()
-
-}
 
 
 
