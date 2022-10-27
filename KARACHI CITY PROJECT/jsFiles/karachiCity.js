@@ -2,6 +2,12 @@ import { canvasRender } from "./canvas.js";
 import {Movement} from "./cameraMoving.js";
 import {boxTexture,simpleTexture} from './texture.js';
 
+
+function toRadian(degree){
+  return degree * Math.PI/180;
+}
+
+
 const canvas = document.getElementById("myCanvas");
 // //Canvas
 // var canvas = document.getElementById("myCanvas");
@@ -47,17 +53,17 @@ var skybox = new THREE.Mesh(skyboxGeo, skyboxTextureMaterial);
 CVOBJ.scene.add(skybox);
 
 // plane 
-const planeGeometry = new THREE.PlaneGeometry(180, 180, 2, 2);
+const planeGeometry = new THREE.PlaneGeometry(200, 200, 4, 4);
 
 const planeMaterial = new THREE.MeshBasicMaterial({
     color: 0x808080, 
     side: THREE.DoubleSide,
-    wireframe: false
+    wireframe: true
 } );
-const plane = new THREE.Mesh(planeGeometry, roadTexture);
+const plane = new THREE.Mesh(planeGeometry, planeMaterial);
 CVOBJ.scene.add(plane);
 
-plane.rotation.set(4.66, 0, 0)
+plane.rotation.set(toRadian(-90), 0, 0) //plane rotatin set
 plane.position.set(0, -5, 0)
 
 

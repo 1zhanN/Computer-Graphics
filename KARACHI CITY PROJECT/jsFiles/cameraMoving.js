@@ -8,6 +8,8 @@ export class Movement {
         this.FPS = 120;
         this.myWorldYAxis = new THREE.Vector3(0, 1, 0);
         this.keySet = {};
+        this.speed = 0.5;
+        this.rotationSpeed = 0.05;
     }
 //Object.keys(this.keySet)
     keyRelease = (e) => {
@@ -45,34 +47,34 @@ export class Movement {
 
     cameraMove = (key) => {
         if (key == "a") {
-          this.camera.translateX(-1);
+          this.camera.translateX(-this.speed);
         }
         else if (key == "d") {
-          this.camera.translateX(+1);
+          this.camera.translateX(this.speed);
         }
         else if (key == "w") {
-          this.camera.translateZ(-1);
+          this.camera.translateZ(-this.speed);
         }
         else if (key == "s") {
-          this.camera.translateZ(+1);
+          this.camera.translateZ(this.speed);
         }
         else if (key == "q") {
-          this.camera.translateY(+1);
+          this.camera.translateY(this.speed);
         }
         else if (key == "e") {
-          this.camera.translateY(-1);
+          this.camera.translateY(-this.speed);
         }
         else if (key == "ArrowRight") {
-          this.camera.rotateOnWorldAxis(this.myWorldYAxis,-0.1);
+          this.camera.rotateOnWorldAxis(this.myWorldYAxis,-this.rotationSpeed);
         }
         else if (key == "ArrowLeft") {
-          this.camera.rotateOnWorldAxis(this.myWorldYAxis,0.1);
+          this.camera.rotateOnWorldAxis(this.myWorldYAxis,this.rotationSpeed);
         }
         else if (key == "ArrowUp") {
-          this.camera.rotateX(+0.1);
+          this.camera.rotateX(this.rotationSpeed);
         }
         else if (key == "ArrowDown") {
-          this.camera.rotateX(-0.1);
+          this.camera.rotateX(-this.rotationSpeed);
         }
        this.keySet[key] = setTimeout(this.cameraMove,1000/this.FPS,key);
     }
