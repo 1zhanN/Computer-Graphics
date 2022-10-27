@@ -53,7 +53,7 @@ var skybox = new THREE.Mesh(skyboxGeo, skyboxTextureMaterial);
 CVOBJ.scene.add(skybox);
 
 // plane 
-const planeGeometry = new THREE.PlaneGeometry(200, 200, 4, 4);
+const planeGeometry = new THREE.PlaneGeometry(200, 180, 8, 3);
 
 const planeMaterial = new THREE.MeshBasicMaterial({
     color: 0x808080, 
