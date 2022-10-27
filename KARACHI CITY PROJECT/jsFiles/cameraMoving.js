@@ -25,7 +25,6 @@ export class Movement {
           if (this.keySet[e.key] == undefined) {
             this.keySet[e.key] = -1;
             const keysPressed = Object.keys(this.keySet);
-            console.log(keysPressed);
             for (let index = 0; index < keysPressed.length; index++) {
               this.startMoving(keysPressed[index]);
             }

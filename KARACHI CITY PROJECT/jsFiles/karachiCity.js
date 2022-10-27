@@ -98,7 +98,7 @@ for (let index = 0; index < positionArray.length; index++) {
 }
 
 
-//GLTFLoader For 3D Object Loading
+//GLTFLoader For 3D Object Loading--------------------------------------------------------------------IZHAN 048
 let loader = new THREE.GLTFLoader();
 loader.load('Assets/wall/scene.glb', function(gltf){
 	plane.add(gltf.scene);
@@ -108,7 +108,7 @@ loader.load('Assets/wall/scene.glb', function(gltf){
 	Dewar.position.set(50,1-p_length/2, 8);
   plane.add(gltf.scene);
   
-})
+});
 
 loader.load('Assets/wall/scene.glb', function(gltf){
 	plane.add(gltf.scene);
@@ -118,7 +118,54 @@ loader.load('Assets/wall/scene.glb', function(gltf){
 	Dewar.position.set(-50,1-p_length/2, 8);
   plane.add(gltf.scene);
   
+});
+
+
+loader.load('Assets/rickshaw/scene.glb', function(gltf){
+	plane.add(gltf.scene);
+	const Rickshaw = gltf.scene.children[0];
+	Rickshaw.scale.set(0.05, 0.05, 0.05);
+  Rickshaw.rotateX(toRadian(90));
+  Rickshaw.rotateZ(toRadian(180));
+	Rickshaw.position.set(-40,30-p_length/2, 0);
+  plane.add(gltf.scene);
+  
 })
+
+loader.load('Assets/rickshaw/scene.glb', function(gltf){
+	plane.add(gltf.scene);
+	const Rickshaw = gltf.scene.children[0];
+	Rickshaw.scale.set(0.05, 0.05, 0.05);
+  Rickshaw.rotateX(toRadian(90));
+  Rickshaw.rotateZ(toRadian(90));
+	Rickshaw.position.set(0,60-p_length/2, 0);
+  plane.add(gltf.scene);
+  
+})
+
+
+loader.load('Assets/rickshaw/scene.glb', function(gltf){
+	plane.add(gltf.scene);
+	const Rickshaw = gltf.scene.children[0];
+	Rickshaw.scale.set(0.05, 0.05, 0.05);
+  Rickshaw.rotateX(toRadian(90));
+  Rickshaw.rotateZ(toRadian(90));
+	Rickshaw.position.set(60,120-p_length/2, 0);
+  plane.add(gltf.scene);
+  
+})
+
+loader.load('Assets/mazar/scene.glb', function(gltf){
+	plane.add(gltf.scene);
+	const Mazar = gltf.scene.children[0];
+	Mazar.scale.set(0.05, 0.05, 0.05);
+  Mazar.rotateX(toRadian(90));
+  // Mazar.rotateZ(toRadian(90));
+	Mazar.position.set(-60,0, 8);
+  plane.add(gltf.scene);
+  
+})
+
 
 
 
@@ -148,7 +195,7 @@ CVOBJ.scene.add(hlight)
 //FPS
 var last_time = 0;
 var current_time = 0
-var FPS = 120;
+var FPS = 60;
 var delta_time = 1000 / FPS;
 
 
