@@ -185,9 +185,9 @@ CVOBJ.scene.add(hlight)
 
 
 
-
-
-
+var camera2 = new THREE.PerspectiveCamera(40, CVOBJ.canvas.offsetWidth / CVOBJ.canvas.offsetHeight, 0.1 ,1000);
+camera2.lookAt(0,-1,0);
+camera2.position.set(0,300,0);
 
 
 
@@ -195,7 +195,7 @@ CVOBJ.scene.add(hlight)
 //FPS
 var last_time = 0;
 var current_time = 0
-var FPS = 60;
+var FPS = 30;
 var delta_time = 1000 / FPS;
 
 
@@ -214,10 +214,22 @@ var render = () => CVOBJ.render();
 //GAMELOOP
 var GameLoop = () => {
     update();
-
+    
     current_time = new Date().getTime();
     if ((current_time - last_time ) >=  delta_time) {
-        render();
+        
+      CVOBJ.renderer.setViewport(0,0,CVOBJ.canvas.offsetWidth,CVOBJ.canvas.offsetHeight);
+      CVOBJ.renderer.setScissor(0,0,CVOBJ.canvas.offsetWidth,CVOBJ.canvas.offsetHeight);
+      CVOBJ.renderer.setScissorTest(false);
+      CVOBJ.renderer.render(CVOBJ.scene,CVOBJ.camera);
+      CVOBJ.renderer.setViewport(0,0,CVOBJ.canvas.offsetWidth/4,CVOBJ.canvas.offsetHeight/4);
+      CVOBJ.renderer.setScissor(0,0,CVOBJ.canvas.offsetWidth/4,CVOBJ.canvas.offsetHeight/4);
+      CVOBJ.renderer.setScissorTest(true);
+      CVOBJ.renderer.render(CVOBJ.scene,camera2);
+
+
+
+
         last_time = current_time;
     }
 
