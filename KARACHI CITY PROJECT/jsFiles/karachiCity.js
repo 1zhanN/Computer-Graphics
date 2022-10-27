@@ -78,8 +78,8 @@ plane.position.set(0, -5, 0)
 let road_offsetX = 5
 let road_offsetY = 5
 
-//Building Vertex Generator
-function buildingVertexGenerator(planeW,planeH,topCorner,xOffset,yOffset,xTiles,yTiles) {
+//Building Position Generator
+function buildingPositionGenerator(planeW,planeH,topCorner,xOffset,yOffset,xTiles,yTiles) {
 
   let leftBorder = {
                 x: topCorner.x + xOffset , 
@@ -90,7 +90,20 @@ function buildingVertexGenerator(planeW,planeH,topCorner,xOffset,yOffset,xTiles,
 
   let buildingTile = { W:singleTile.W - 2*xOffset, H: singleTile.H - 2*yOffset};
 
+  let oneBuilding
 
+
+
+
+
+
+  //position generator of buildings
+  for (let row = 0; row < yTiles; row++) {
+    for (let col = 0; col < xTiles; col++) {
+     
+    }
+    
+  }
   
 }
 buildingVertexGenerator(p_widht,p_height,p_topCornerVertex,road_offsetX,road_offsetY,xTiles,yTiles);
