@@ -80,14 +80,23 @@ let road_offsetY = 5
 
 //Building Vertex Generator
 function buildingVertexGenerator(planeW,planeH,topCorner,xOffset,yOffset,xTiles,yTiles) {
+
   let leftBorder = {
                 x: topCorner.x + xOffset , 
                 y: topCorner.y - yOffset
             };
-  let singleTileW = planeW / xTiles;
-  let singleTileH = planeH / yTiles;
 
+  let singleTile = { W:planeW / xTiles, H: planeH / yTiles};
+
+  let buildingTile = { W:singleTile.W - 2*xOffset, H: singleTile.H - 2*yOffset};
+
+
+  
 }
+buildingVertexGenerator(p_widht,p_height,p_topCornerVertex,road_offsetX,road_offsetY,xTiles,yTiles);
+
+
+
 
 //Creating Cube
 const geometry = new THREE.BoxGeometry( 1, 1, 1 );
