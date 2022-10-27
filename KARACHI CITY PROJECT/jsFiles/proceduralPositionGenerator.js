@@ -32,7 +32,6 @@ export function buildingPositionGenerator(planeW,planeH,topCorner,xOffset,yOffse
           b_one.x += 2*xOffset;
           b_two = {x: b_one.x ,y: b_one.y - maxBuildingSize.L};
         }
-        
       }
     }
     return [positionArray,maxBuildingSize];

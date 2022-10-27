@@ -3,25 +3,12 @@ import {Movement} from "./cameraMoving.js";
 import {boxTexture,simpleTexture,buildingTexture} from './texture.js';
 import {buildingPositionGenerator,generateRandomSize} from './proceduralPositionGenerator.js';
 
-
 function toRadian(degree){
   return degree * Math.PI/180;
 }
 
 
 const canvas = document.getElementById("myCanvas");
-// //Canvas
-// var canvas = document.getElementById("myCanvas");
-
-// //Scene Perspective and Render
-// var scene = new THREE.Scene();
-// var camera = new THREE.PerspectiveCamera(40, canvas.offsetWidth / canvas.offsetHeight, 0.1, 1000);
-
-// var renderer = new THREE.WebGLRenderer({ canvas: myCanvas });
-
-// renderer.setSize(canvas.offsetWidth, canvas.offsetHeight);
-// //Initilize empty Canvas
-// renderer.render(scene, camera);
 
 const CVOBJ = new canvasRender(canvas)
 
