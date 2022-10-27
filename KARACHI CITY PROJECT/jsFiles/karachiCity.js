@@ -19,7 +19,7 @@ CVOBJ.scene.add( axesHelper );
 
 
 //Camera Position and Movement----------------------------------------------------- 
-CVOBJ.camera.position.set(0,100,300);
+CVOBJ.camera.position.set(0,100,200);
 CVOBJ.camera.rotateX(toRadian(-20));
 var movement = new Movement(window,CVOBJ.camera);
 window.onkeyup = function (e) {
@@ -101,11 +101,27 @@ for (let index = 0; index < positionArray.length; index++) {
 //GLTFLoader For 3D Object Loading
 let loader = new THREE.GLTFLoader();
 loader.load('Assets/wall/scene.glb', function(gltf){
-	CVOBJ.scene.add(gltf.scene.children[0]);
-	const car = gltf.scene.children[0];
-	car.scale.set(0, 0, 0);
-	car.position.set(0,0,0);
+	plane.add(gltf.scene);
+	const Dewar = gltf.scene.children[0];
+	Dewar.scale.set(0.1, 0.1, 0.1);
+  Dewar.rotateX(toRadian(-90));
+	Dewar.position.set(50,1-p_length/2, 8);
+  plane.add(gltf.scene);
+  
 })
+
+loader.load('Assets/wall/scene.glb', function(gltf){
+	plane.add(gltf.scene);
+	const Dewar = gltf.scene.children[0];
+	Dewar.scale.set(0.1, 0.1, 0.1);
+  Dewar.rotateX(toRadian(-90));
+	Dewar.position.set(-50,1-p_length/2, 8);
+  plane.add(gltf.scene);
+  
+})
+
+
+
 let intensity = 4
 let hlight = new THREE.AmbientLight(0x404040, intensity);
 CVOBJ.scene.add(hlight)
