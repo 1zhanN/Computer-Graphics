@@ -88,9 +88,17 @@ function buildingPositionGenerator(planeW,planeH,topCorner,xOffset,yOffset,xTile
 
   let singleTile = { W:planeW / xTiles, H: planeH / yTiles};
 
-  let buildingTile = { W:singleTile.W - 2*xOffset, H: singleTile.H - 2*yOffset};
+  let buildingTile = { W:singleTile.W - 2*xOffset, H: singleTile.H - 2*yOffset };
+  console.log(buildingTile);
 
-  let oneBuilding
+  let buildingDiv = 2;
+  let maxBuildingSize = { W: buildingTile.W / buildingDiv , H: buildingTile.H / buildingDiv };
+  console.log(maxBuildingSize);
+  
+ 
+  let b_one = {x: ,y: };
+  let b_two = {x: ,y: };
+
 
 
 
@@ -106,7 +114,7 @@ function buildingPositionGenerator(planeW,planeH,topCorner,xOffset,yOffset,xTile
   }
   
 }
-buildingVertexGenerator(p_widht,p_height,p_topCornerVertex,road_offsetX,road_offsetY,xTiles,yTiles);
+buildingPositionGenerator(p_widht,p_height,p_topCornerVertex,road_offsetX,road_offsetY,xTiles,yTiles);
 
 
 
