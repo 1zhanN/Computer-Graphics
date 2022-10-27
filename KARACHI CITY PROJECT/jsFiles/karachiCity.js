@@ -85,20 +85,19 @@ function buildingPositionGenerator(planeW,planeH,topCorner,xOffset,yOffset,xTile
                 x: topCorner.x + xOffset , 
                 y: topCorner.y - yOffset
             };
-
+  
   let singleTile = { W:planeW / xTiles, H: planeH / yTiles};
 
   let buildingTile = { W:singleTile.W - 2*xOffset, H: singleTile.H - 2*yOffset };
-  console.log(buildingTile);
+  
 
   let buildingDiv = 2;
   let maxBuildingSize = { W: buildingTile.W / buildingDiv , H: buildingTile.H / buildingDiv };
-  console.log(maxBuildingSize);
   
- 
-  let b_one = {x: ,y: };
-  let b_two = {x: ,y: };
-
+  
+  let b_one = {x: leftBorder.x + maxBuildingSize.W / 2 , y: leftBorder.y - maxBuildingSize.H / 2 };
+  let b_two = {x: b_one.x ,y: b_one.y - maxBuildingSize.H};
+  console.log(b_one,b_two);
 
 
 
@@ -106,21 +105,40 @@ function buildingPositionGenerator(planeW,planeH,topCorner,xOffset,yOffset,xTile
 
 
   //position generator of buildings
+  let positionArray = []
   for (let row = 0; row < yTiles; row++) {
-    for (let col = 0; col < xTiles; col++) {
-     
+    b_one = {x: leftBorder.x + maxBuildingSize.W / 2 , y: leftBorder.y - maxBuildingSize.H / 2 };
+    b_one.y -= row*(buildingTile.H + 2*xOffset);
+    b_two = {x: b_one.x ,y: b_one.y - maxBuildingSize.H};
+    for (let col = 0; col < xTiles*2; col++) {
+      let pos1 = [b_one.x + col*maxBuildingSize.W, b_one.y];
+      let pos2 = [b_two.x + col*maxBuildingSize.W, b_two.y];
+      positionArray.push(pos1,pos2);
+      if (col % 2 != 0) {
+        b_one.x += 2*xOffset;
+        b_two = {x: b_one.x ,y: b_one.y - maxBuildingSize.H};
+      }
+      
     }
-    
   }
-  
+ console.log(positionArray);
+ return  positionArray;
 }
-buildingPositionGenerator(p_widht,p_height,p_topCornerVertex,road_offsetX,road_offsetY,xTiles,yTiles);
+const posArrB = buildingPositionGenerator(p_widht,p_height,p_topCornerVertex,road_offsetX,road_offsetY,xTiles,yTiles);
 
 
+var mat = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
+for (let index = 0; index < posArrB.length; index++) {
+  const coor = posArrB[index];
+  const geometry = new THREE.BoxGeometry( 15, 25, 10 );
+  var cube = new THREE.Mesh( geometry, mat);
+  cube.position.set(coor[0], coor[1], 10);
+  plane.add(cube);
+}
 
 
 //Creating Cube
-const geometry = new THREE.BoxGeometry( 1, 1, 1 );
+const geometry = new THREE.BoxGeometry( 15, 25, 10 );
 const material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
 var cube = new THREE.Mesh( geometry, material );
 plane.add(cube);
@@ -128,6 +146,7 @@ cube.position.set(0,35,0);
 var cube = new THREE.Mesh( geometry, material );
 plane.add(cube);
 cube.position.set(0,25,0);
+cube.position.set(-147.5,72.5,0);
 var radian = (angle) => angle*180/Math.PI;
 //Rotation variable
 var i = 0.001
