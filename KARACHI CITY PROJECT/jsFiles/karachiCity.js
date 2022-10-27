@@ -52,8 +52,16 @@ var skybox = new THREE.Mesh(skyboxGeo, skyboxTextureMaterial);
   
 CVOBJ.scene.add(skybox);
 
-// plane 
-const planeGeometry = new THREE.PlaneGeometry(320, 180, 8, 3);
+// Plane ---------------------------------------------------------------------
+let p_widht = 320;
+let p_height = 180;
+let xTiles = 8;
+let yTiles = 3;
+let p_topCornerVertex = {
+                          x:-p_widht/2,
+                          y:p_height/2
+                      }; 
+const planeGeometry = new THREE.PlaneGeometry(p_widht, p_height, xTiles, yTiles);
 
 const planeMaterial = new THREE.MeshBasicMaterial({
     color: 0x808080, 
@@ -66,7 +74,20 @@ CVOBJ.scene.add(plane);
 plane.rotation.set(toRadian(-90), 0, 0) //plane rotatin set
 plane.position.set(0, -5, 0)
 
+//Road-------------------------------------------------------------------------
+let road_offsetX = 5
+let road_offsetY = 5
 
+//Building Vertex Generator
+function buildingVertexGenerator(planeW,planeH,topCorner,xOffset,yOffset,xTiles,yTiles) {
+  let leftBorder = {
+                x: topCorner.x + xOffset , 
+                y: topCorner.y - yOffset
+            };
+  let singleTileW = planeW / xTiles;
+  let singleTileH = planeH / yTiles;
+
+}
 
 //Creating Cube
 const geometry = new THREE.BoxGeometry( 1, 1, 1 );
@@ -83,6 +104,7 @@ var i = 0.001
 
 
 //random building generator in a 
+let b_width = +2
 let x = 0
 let ran = 0
 let buildings = 8
