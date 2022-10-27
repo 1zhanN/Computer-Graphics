@@ -1,6 +1,6 @@
 import { canvasRender } from "./canvas.js";
 import {Movement} from "./cameraMoving.js";
-import {boxTexture,simpleTexture} from './texture.js';
+import {boxTexture,simpleTexture,buildingTexture} from './texture.js';
 
 
 function toRadian(degree){
@@ -48,7 +48,8 @@ let skyboxTextureMaterial = boxTexture("material/skybox/","skybox_");
 let roadTexture = simpleTexture("material/road/","road1");
 var texture = []
 for (let index = 0; index < 5; index++) {
-  texture.push(new THREE.TextureLoader().load("material\\buildingTex\\buildingtex"+ (index+1) +".bmp"));
+  //texture.push(new THREE.TextureLoader().load("material\\buildingTex\\buildingtex"+ (index+1) +".bmp"));
+  texture.push(buildingTexture("material\\buildingTex\\","buildingtex"+(index+1),"topBottom"));
 }
 
 
@@ -157,9 +158,9 @@ function buildingPositionGenerator(scene,planeW,planeH,topCorner,xOffset,yOffset
 
     console.log( Math.abs(parseInt(Math.random()*texture.length-1)));
     let randomTextureIndex = Math.abs(parseInt(Math.random()*texture.length-1))
-    let materialArray2 = new THREE.MeshBasicMaterial({map: texture[randomTextureIndex]})
-
-    var cube = new THREE.Mesh( geometry, materialArray2);
+    //let materialArray2 = new THREE.MeshBasicMaterial({map: texture[randomTextureIndex]})
+    
+    var cube = new THREE.Mesh( geometry, texture[randomTextureIndex]);
 
     cube.position.set(coor[0], coor[1], (cube.position.z+cube.geometry.parameters.depth/2)+0.1);
     
