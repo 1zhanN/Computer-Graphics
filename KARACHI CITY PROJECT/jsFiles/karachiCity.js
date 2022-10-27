@@ -46,6 +46,11 @@ window.onkeyup = function (e) {
 // TEXTURE------------------------------------------------------------------
 let skyboxTextureMaterial = boxTexture("material/skybox/","skybox_");
 let roadTexture = simpleTexture("material/road/","road1");
+var texture = []
+for (let index = 0; index < 5; index++) {
+  texture.push(new THREE.TextureLoader().load("material\\buildingTex\\buildingtex"+ (index+1) +".bmp"));
+}
+
 
 
 var skyboxGeo = new THREE.BoxGeometry(400, 400, 400);
@@ -81,31 +86,10 @@ let road_offsetY = 5
 
 
 
-//random building generator in a 
-let b_width = +2
-let x = 0
-let ran = 0
-let buildings = 8
-
-let texture = new THREE.TextureLoader().load("material\\buildingTex\\buildingtex1.bmp");
 
 
-for(let i = 0; i < buildings; i++){
-const cubeGeometry = new THREE.BoxGeometry(4, 7+10*ran, 10+ 10*ran);
-var materialArray2 = new THREE.MeshBasicMaterial({
-  map: texture
-});
 
-const cube = new THREE.Mesh(cubeGeometry, materialArray2);
-plane.add(cube);
 
-cube.scale.set(2, 2 ,2)
-cube.position.set(x,0,(cube.scale.z*cube.geometry.parameters.depth/2)+0.1) // since plane itself is a 2D coordinate system, and cube is the child of plane, if we increase z it will effect cube's height (y axis acc to the eye)
-console.log()
-x+=12;
-ran = Math.random()
-
-}
 
 
 //Building Position Generator--------------------------------------------------
@@ -119,8 +103,8 @@ function generateRandomSize(maxW,maxL,maxH) {
   if (L<20) {
     L = 20;
   }
-  if (H<40) {
-    H = 40;
+  if (H<30) {
+    H = 30;
   }
   return [W,L,H]
 }
@@ -168,8 +152,12 @@ function buildingPositionGenerator(scene,planeW,planeH,topCorner,xOffset,yOffset
 
     const coor = positionArray[index];
 
-    let size = generateRandomSize(maxBuildingSize.W,maxBuildingSize.L,100);
-    const geometry = new THREE.BoxGeometry( size[0]+0.5, size[1], size[2] );
+    let size = generateRandomSize(maxBuildingSize.W,maxBuildingSize.L,70);
+    const geometry = new THREE.BoxGeometry( size[0]-0.1, size[1]-0.1, size[2] );
+
+    console.log( Math.abs(parseInt(Math.random()*texture.length-1)));
+    let randomTextureIndex = Math.abs(parseInt(Math.random()*texture.length-1))
+    let materialArray2 = new THREE.MeshBasicMaterial({map: texture[randomTextureIndex]})
 
     var cube = new THREE.Mesh( geometry, materialArray2);
 
@@ -184,19 +172,7 @@ buildingPositionGenerator(plane,p_widht,p_length,p_topCornerVertex,road_offsetX,
 
 
 
-//Creating Cube
-const geometry = new THREE.BoxGeometry( 15, 25, 10 );
-const material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
-var cube = new THREE.Mesh( geometry, material );
-plane.add(cube);
-cube.position.set(0,35,0);
-var cube = new THREE.Mesh( geometry, material );
-plane.add(cube);
-cube.position.set(0,25,0);
-cube.position.set(-147.5,72.5,0);
-var radian = (angle) => angle*180/Math.PI;
-//Rotation variable
-var i = 0.001
+
 
 
 
@@ -219,9 +195,7 @@ var delta_time = 1000 / FPS;
 
 //Variables update function
 var update = () => {
-    // cube.rotation.x += radian(i);
-    // cube.rotation.y += radian(i);
-    // cube.rotation.z += radian(i);
+
     
 };
 
