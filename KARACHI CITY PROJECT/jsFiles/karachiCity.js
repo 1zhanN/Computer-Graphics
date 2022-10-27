@@ -11,7 +11,6 @@ function toRadian(degree){
 const canvas = document.getElementById("myCanvas");
 
 const CVOBJ = new canvasRender(canvas)
-
 CVOBJ.setRenderer();
 
 
@@ -75,12 +74,6 @@ let road_offsetY = 5
 
 
 
-
-
-
-
-
-
 //Building Position Generator--------------------------------------------------
 let arrayAndSize = buildingPositionGenerator(p_widht,p_length,p_topCornerVertex,road_offsetX,road_offsetY,xTiles,yTiles);
 let positionArray = arrayAndSize[0];
@@ -102,12 +95,20 @@ for (let index = 0; index < positionArray.length; index++) {
   cube.position.set(coor[0], coor[1], (cube.position.z+cube.geometry.parameters.depth/2)+0.1);
 
   plane.add(cube);
-  }
+}
 
 
-
-
-
+//GLTFLoader For 3D Object Loading
+let loader = new THREE.GLTFLoader();
+loader.load('Assets/wall/scene.glb', function(gltf){
+	CVOBJ.scene.add(gltf.scene.children[0]);
+	const car = gltf.scene.children[0];
+	car.scale.set(0, 0, 0);
+	car.position.set(0,0,0);
+})
+let intensity = 4
+let hlight = new THREE.AmbientLight(0x404040, intensity);
+CVOBJ.scene.add(hlight)
 
 
 
