@@ -53,7 +53,7 @@ var skybox = new THREE.Mesh(skyboxGeo, skyboxTextureMaterial);
 CVOBJ.scene.add(skybox);
 
 // plane 
-const planeGeometry = new THREE.PlaneGeometry(200, 180, 8, 3);
+const planeGeometry = new THREE.PlaneGeometry(320, 180, 8, 3);
 
 const planeMaterial = new THREE.MeshBasicMaterial({
     color: 0x808080, 
@@ -72,8 +72,11 @@ plane.position.set(0, -5, 0)
 const geometry = new THREE.BoxGeometry( 1, 1, 1 );
 const material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
 var cube = new THREE.Mesh( geometry, material );
-CVOBJ.scene.add( cube );
-
+plane.add(cube);
+cube.position.set(0,35,0);
+var cube = new THREE.Mesh( geometry, material );
+plane.add(cube);
+cube.position.set(0,25,0);
 var radian = (angle) => angle*180/Math.PI;
 //Rotation variable
 var i = 0.001
@@ -119,9 +122,9 @@ var delta_time = 1000 / FPS;
 
 //Variables update function
 var update = () => {
-    cube.rotation.x += radian(i);
-    cube.rotation.y += radian(i);
-    cube.rotation.z += radian(i);
+    // cube.rotation.x += radian(i);
+    // cube.rotation.y += radian(i);
+    // cube.rotation.z += radian(i);
     
 };
 
