@@ -1,10 +1,10 @@
-//By Izhan 048, Modifed by Umar 104
+
 const sides = ["ft", "bk", "up", "dn", "rt", "lf"];
 export function boxTexture (location,name) {
   let materialArray = [];
   for (let i = 0; i < 6; i++) {
     let texture =  new THREE.TextureLoader().load(location+name+sides[i]+".bmp");
-    materialArray.push(new THREE.MeshBasicMaterial( {map : texture, wireframe : false} ));
+    materialArray.push(new THREE.MeshBasicMaterial( {map : texture, wireframe : false} )); //pushing material with texture in material array
     materialArray[i].side = THREE.BackSide;
   }
   return materialArray;
